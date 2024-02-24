@@ -1,0 +1,138 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Home</title>
+    <link rel="stylesheet" href="main.css">
+</head>
+<body>
+    <nav>
+        <ul>
+            <li><a href="index.html">Coffee Order System</a></li>
+            <li><a href="orderstatus.html">Order Status</a></li>
+            
+        </ul>
+    </nav>
+    <div class="main">
+    <button id="button">Start your order here</button>
+    </div>
+    <script>
+        var counter = 1;
+        let responses = {beverage: "", condiments: []};
+        document.getElementById('button').addEventListener('click', function(){
+            document.getElementsByClassName('main')[0].innerHTML = ""
+            let greeting = document.createElement('h3')
+            greeting.innerHTML = "Select the beverage"
+            let darkRoast = document.createElement('button')
+            darkRoast.innerHTML = "Dark Roast"
+            darkRoast.addEventListener('click', function(){
+                responses.beverage = "Dark Roast"
+                condiments()
+            })
+            let Espresso = document.createElement('button')
+            Espresso.innerHTML = "Espresso"
+            Espresso.addEventListener('click', function(){
+                responses.beverage = "Espresso"
+                condiments()
+            })
+            let HouseBlend = document.createElement('button')
+            HouseBlend.innerHTML = "House Blend"
+            HouseBlend.addEventListener('click', function(){
+                responses.beverage = "House Blend"
+                condiments()
+            })
+            let Decaf = document.createElement('button')
+            Decaf.innerHTML = "Decaf"
+            Decaf.addEventListener('click', function(){
+                responses.beverage = "Decaf"
+                condiments()
+            })
+            document.getElementsByClassName('main')[0].appendChild(greeting)
+            document.getElementsByClassName('main')[0].appendChild(darkRoast)
+            document.getElementsByClassName('main')[0].appendChild(Espresso)
+            document.getElementsByClassName('main')[0].appendChild(HouseBlend)
+            document.getElementsByClassName('main')[0].appendChild(Decaf)
+            
+        })
+        function condiments(){
+                document.getElementsByClassName('main')[0].innerHTML = ""
+                let greeting = document.createElement('h3')
+                greeting.innerHTML = "Add the condiments"  
+             
+                let milk = document.createElement('button')
+                milk.innerHTML = "Milk"
+                milk.addEventListener('click', function(){
+                    responses.condiments.push("Milk")
+                    orderStatus("Milk")
+                })
+                let mocha = document.createElement('button')             
+                mocha.innerHTML = "Mocha"
+                mocha.addEventListener('click', function(){
+                    responses.condiments.push("Mocha")
+                    orderStatus("Mocha")
+                })
+                let soy = document.createElement('button')
+                soy.innerHTML = "Soy"
+                soy.addEventListener('click', function(){
+                    responses.condiments.push("Soy")
+                    orderStatus("Soy")
+                })
+                let whip = document.createElement('button')
+                whip.innerHTML = "Whip"
+                whip.addEventListener('click', function(){
+                    responses.condiments.push("Whip")
+                    orderStatus("Whip")
+                })
+                let orderTab = document.createElement('div')
+                orderTab.setAttribute('id', 'orderTab')
+                let orderHeader = document.createElement('h5')
+                orderHeader.innerHTML = "My order"
+                
+                let orderList = document.createElement('ol')
+                let orderItem = document.createElement('li')
+                orderItem.innerHTML = responses.beverage
+                let confirmOrder = document.createElement('button')
+                confirmOrder.innerHTML = "Confirm Order"
+                confirmOrder.addEventListener('click', function(){
+                    finalizeOrder()
+                })
+                orderList.appendChild(orderItem)
+                orderTab.appendChild(orderHeader)
+                orderTab.appendChild(orderList)
+                orderTab.appendChild(confirmOrder)
+
+                let main = document.getElementsByClassName('main')[0]
+                main.appendChild(greeting)
+                main.appendChild(milk)
+                main.appendChild(mocha)
+                main.appendChild(soy)
+                main.appendChild(whip)
+                main.appendChild(orderTab)
+            }
+            function orderStatus(condiment){
+               orderList = document.getElementsByTagName('ol')[0]
+                orderItem = document.createElement('li')
+                orderItem.innerHTML = condiment
+                orderList.appendChild(orderItem)
+                
+            }
+            function finalizeOrder(){
+                let main = document.getElementsByClassName('main')[0]
+                main.innerHTML = ""
+                let orderHeader = document.createElement('h3')
+                orderHeader.innerHTML = "Order Placed: "
+                let orderid = document.createElement('p')
+                orderid.innerHTML = "Order ID: " + counter
+                let orderName = document.createElement('p')
+                orderName.innerHTML = responses.beverage + " with " + responses.condiments.join(", ")
+                main.appendChild(orderHeader)
+                main.appendChild(orderid)
+                main.appendChild(orderName)
+                counter++
+
+            }
+
+    </script>
+</body>
+</html>
