@@ -18,6 +18,7 @@
     <button id="button">Start your order here</button>
     </div>
     <script>
+        let host = "https://coffee-order-latest-k1ta.onrender.com/"
         var counter = 1;
         let responses = {beverage: "", condiments: []};
         document.getElementById('button').addEventListener('click', function(){
@@ -117,15 +118,29 @@
                 orderList.appendChild(orderItem)
                 
             }
-            function finalizeOrder(){
+            async function finalizeOrder(){
+                let request = {
+                    method: "POST", 
+                    headers: {
+                        "Content-Type": "application/json"
+                    },
+                    body: JSON.stringify(responses)
+                }
+                let response = await fetch(host + "orders", request)
+                if ( response.ok){
+                    console.log("Order placed")
+                    answer = await response.json()
+                    console.log(answer)
+                }
+                
                 let main = document.getElementsByClassName('main')[0]
                 main.innerHTML = ""
                 let orderHeader = document.createElement('h3')
                 orderHeader.innerHTML = "Order Placed: "
                 let orderid = document.createElement('p')
-                orderid.innerHTML = "Order ID: " + counter
+                orderid.innerHTML = "Order ID: " + answer.id
                 let orderName = document.createElement('p')
-                orderName.innerHTML = responses.beverage + " with " + responses.condiments.join(", ")
+                orderName.innerHTML = answer.description + " " + "$"+answer.cost 
                 main.appendChild(orderHeader)
                 main.appendChild(orderid)
                 main.appendChild(orderName)
