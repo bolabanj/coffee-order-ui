@@ -8,17 +8,19 @@
 </head>
 <body>
     <nav>
-        <ul>
+        <ul class="topnav">
             <li><a href="index.html">Coffee Order System</a></li>
             <li><a href="orderstatus.html">Order Status</a></li>
+            <li a href="login.html">Login</li>
             
         </ul>
     </nav>
     <div class="main">
     <button id="button">Start your order here</button>
     </div>
+    <script src="configuration.js"></script>
     <script>
-        let host = "https://coffee-order-latest-k1ta.onrender.com/"
+        let host = getHost()
         var counter = 1;
         let responses = {beverage: "", condiments: []};
         document.getElementById('button').addEventListener('click', function(){
@@ -122,7 +124,8 @@
                 let request = {
                     method: "POST", 
                     headers: {
-                        "Content-Type": "application/json"
+                        "Content-Type": "application/json",
+                        'Authorization': `Bearer ${configuration.token}`
                     },
                     body: JSON.stringify(responses)
                 }
